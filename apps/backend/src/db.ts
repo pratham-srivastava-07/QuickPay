@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
-mongoose.connect("mongodb+srv://prathamrajsri2003:<password>@cluster0.nkmirio.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
-
+// mongoose.connect("mongodb+srv://prathamrajsri2003:<password>@cluster0.nkmirio.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+   mongoose.connect("mongodb://localhost:27017/quickPay")
 const userSchema = new mongoose.Schema({
     username: {
         type: String,
