@@ -1,15 +1,18 @@
-// import React from 'react'
-
 import { useState } from "react"
 import { InputBox } from "../components/InputBox"
 import { Heading } from "../components/Heading"
 import { SubHeading } from "../components/Subheading"
+import axios from "axios"
+import { Button } from "../components/Button"
+import { BottomWarning } from "../components/BottomWarning"
+import { useNavigate } from "react-router-dom"
 
 export default function Signup() {
   const  [username, setUsername] = useState("")
   const  [firstname, setFirstname] = useState("")
   const [lastname, setLastname] = useState("")
   const [password, setPassword] = useState("")
+  const navigate = useNavigate();
   return (
     <div className="bg-slate-300 h-screen flex justify-center" >
       <div className="flex flex-col justify-center">
@@ -29,7 +32,26 @@ export default function Signup() {
           setPassword(e.target.value)
         }} placeholder="password" label={"Password"} />
         </div>
+        <div className="pt-4">
+          <Button
+          label={"Sign up"} 
+          onClick={async()=> 
+          {
+            const res = await axios.post("http://localhost:3000/api/v1/user/signup", {
+              username,
+              firstname,
+              lastname,
+              password
+            });
+          localStorage.setItem("token", res.data.token)
+          navigate("/dashboard")
+          }
+        }>
+          </Button>
         </div>
+        <BottomWarning label={"Already have an account?"} buttonText={"Sign in"} to={"/signin"} />
+        </div> 
+        
     </div>
   )
 }

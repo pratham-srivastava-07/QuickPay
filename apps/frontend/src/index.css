@@ -2,3 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
+.main {
+    background-image: url('../src/assets/bg.webp');
+}
