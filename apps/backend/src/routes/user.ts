@@ -3,6 +3,7 @@ import zod from "zod"
 import { Account, User } from "../db";
 import { JWT_SECRET } from "../config";
 import jwt from "jsonwebtoken"
+import authMiddleware from "../middleware";
 
 const userRouter = express.Router()
 
@@ -79,7 +80,52 @@ userRouter.post("/signin", async(req, res)=> {
   
 })
 
+const updateBody = zod.object({
+    password: zod.string(),
+    firstname: zod.string(),
+    lastnem: zod.string()
+})
 
+userRouter.put("/", authMiddleware, async(req, res) => {
+        const parsedData = updateBody.safeParse(req.body);
+
+        if(!parsedData.success) {
+            res.status(411).json({
+                message: "Error updating"
+            })
+        }
+
+        const updateUser = await User.updateOne({
+            id: req.userId
+        })
+
+        res.json({
+            message: "Updated successfully"
+        })
+})
+
+userRouter.get("/bulk", async(req, res) => {
+    const filter = req.query.filter || ""
+
+    const user = await User.find({
+        $or: [{
+            firstName: {
+                "$regex": filter
+            }, 
+            lastName: {
+                "$regex": filter
+            }
+        }],
+    })
+    res.status(200).json({
+        user: user.map(user => ({
+            username: user.username,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            _id: user._id
+        }))
+    })
+ })
 
 module.exports = userRouter
 
