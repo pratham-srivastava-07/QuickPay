@@ -5,6 +5,7 @@ import Signup from './pages/Signup'
 import Signin from './pages/Signin'
 import Dashboard from './pages/Dashboard'
 import SendMoney from './pages/SendMoney'
+import Home from './components/Home'
 
 function App() {
   
@@ -12,6 +13,7 @@ function App() {
   return (
    <div className='app-background'>
    <Routes>
+      <Route path='/' element={<Home/>} />
       <Route path="/signup" index element={<Signup />} />
       <Route path="/signin" element={<Signin />} />
       <Route path="/dashboard" element={<Dashboard />} />
