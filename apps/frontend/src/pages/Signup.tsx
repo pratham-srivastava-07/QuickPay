@@ -9,8 +9,8 @@ import { useNavigate } from "react-router-dom"
 
 export default function Signup() {
   const  [username, setUsername] = useState("")
-  const  [firstname, setFirstname] = useState("")
-  const [lastname, setLastname] = useState("")
+  const  [firstName, setFirstname] = useState("")
+  const [lastName, setLastname] = useState("")
   const [password, setPassword] = useState("")
   const navigate = useNavigate();
   return (
@@ -39,8 +39,8 @@ export default function Signup() {
           {
             const res = await axios.post("http://localhost:3000/api/v1/user/signup", {
               username,
-              firstname,
-              lastname,
+              firstName,
+              lastName,
               password
             });
           localStorage.setItem("token", res.data.token)
